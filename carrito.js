@@ -2,10 +2,13 @@ const contenedorProductos=document.getElementById("contenedorProductos")
 
 const listadoBulls = "nombreToros.json";
 
+let productos;
+
 fetch (listadoBulls)
    .then(respuesta => respuesta.json())
    .then((datos) => {
-    mostrarProductos(datos)
+    productos = datos
+    mostrarProductos(productos)
     console.log(contenedorProductos);
    })
     .catch (error => console.log(error))
@@ -22,8 +25,8 @@ recoverFromLocalStorage()
 
 
 //funcion para mostrar productos
-function mostrarProductos(datos){
-    datos.forEach((producto)=>{
+const mostrarProductos =() =>{
+    productos.forEach((producto)=>{
         const card =document.createElement("div")
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML=`
@@ -47,7 +50,7 @@ function mostrarProductos(datos){
 }
 
 const agregarAlCarrito= (id)=> {
-    const producto=productos.find((producto)=>producto.id === id)
+    const producto = producto.find((producto)=>producto.id === id)
     const productoEnCarrito = carrito.find((producto)=>producto.id === id)
     if(productoEnCarrito){
         productoEnCarrito.cantidad++
@@ -62,26 +65,26 @@ const agregarAlCarrito= (id)=> {
 }
 
 
- const agregarCarrito = (id)  => {
-    fetch(listadoBulls)
-     .then (respuesta =>  respuesta.json())
-     .then ((datos) => {
-         const listadoB = datos.find((listadoB) => listadoB.id === id)
-         const prodBull = carrito.find((listadoB) => listadoB.id === id)
-         if (prodBull) {
-             prodBull.cantidad++
-         }
-         else {
-             carrito.push(listadoB)
-             saveToLocalStorage()
+//  const agregarCarrito = (id)  => {
+//     fetch(listadoBulls)
+//      .then (respuesta =>  respuesta.json())
+//      .then ((datos) => {
+//          const listadoB = datos.find((listadoB) => listadoB.id === id)
+//          const prodBull = carrito.find((listadoB) => listadoB.id === id)
+//          if (prodBull) {
+//              prodBull.cantidad++
+//          }
+//          else {
+//              carrito.push(listadoB)
+//              saveToLocalStorage()
 
-     }
-     calcularTotal()
-     mostrarProductos()
+//      }
+//      calcularTotal()
+//      mostrarProductos()
     
-     })
+//      })
 
-     }
+//      }
 
 
 
